@@ -8,13 +8,14 @@ import java.util.List;
 
 public class ProductDAO {
     
+    String driverName = "org.apache.derby.jdbc.ClientDriver";
     private static final String host = "jdbc:derby://localhost:1527/Client";
     private static final String user =  "nbuser";
     private static final String password = "nbuser";
      
     public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
-        String selectAll = "SELECT * FROM NBUSER.PRODUCTS";
+        String query = "SELECT PRODUCT_ID, PRODUCTNAME, CATEGORY, PRICE, STOCK_QUANTITY, IMAGE_URL FROM \"NBUSER\".\"PRODUCTS\"";
         
         try {
             
@@ -22,7 +23,7 @@ public class ProductDAO {
  
 
             try (Connection conn = DriverManager.getConnection(host, user, password);
-                 PreparedStatement stmt = conn.prepareStatement(selectAll);
+                 PreparedStatement stmt = conn.prepareStatement(query);
                  ResultSet rs = stmt.executeQuery()) {
             
                 while (rs.next()) {
